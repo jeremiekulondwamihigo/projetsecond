@@ -1,0 +1,49 @@
+.soit {
+  margin-left: 15px !important;
+  margin-top: 30px !important;
+  text-align: center !important;
+  color: rgb(35, 11, 54) !important;
+  font-weight: bold !important;
+}
+
+.footerall {
+  width: 100%;
+  bottom: 0px;
+}
+.Noncorrect {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 3%;
+  background-color: red;
+}
+.correct {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 3%;
+  background-color: green;
+}
+
+.inPut {
+  width: 100%;
+  margin-bottom: 10px;
+}
+.affiche {
+  margin-left: 6rem;
+}
+.date {
+  font-weight: bold;
+  font-size: 12px;
+}
+.boutton1 {
+  margin-right: 20px;
+}
+.content-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+}

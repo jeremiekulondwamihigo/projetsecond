@@ -1,17 +1,44 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import 'bootstrap/dist/css/bootstrap.css'
+import 'assets/scss/paper-dashboard.scss?v=1.3.0'
+import 'assets/demo/demo.css'
+import 'perfect-scrollbar/css/perfect-scrollbar.css'
+import 'primereact/resources/themes/lara-light-indigo/theme.css' //theme
+import 'primereact/resources/primereact.min.css' //core css
+import 'primeicons/primeicons.css'
+
+import AdminLayout from 'layouts/Admin.jsx'
+import Other from 'layouts/Others.jsx'
+import LoginLaYout from 'layouts/LoginLayout.jsx'
+import ContexteAll from 'ContextAll'
+import ReactHookFormDemo from 'Essaie'
+import { Provider } from 'react-redux'
+import { configureStore } from '@reduxjs/toolkit'
+import readEtablissement from 'Redux/Read.jsx'
+
+const store = configureStore({
+  reducer: {
+    users: readEtablissement,
+  },
+})
+
+const root = ReactDOM.createRoot(document.getElementById('root'))
+
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+  <ContexteAll>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Switch>
+          <Route path="/params" render={(props) => <Other {...props} />} />
+          <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
+          <Route path="/users" render={(props) => <LoginLaYout {...props} />} />
+          <Route path="/essaie" component={ReactHookFormDemo} />
+          <Redirect to="/users/login" />
+        </Switch>
+      </BrowserRouter>
+    </Provider>
+  </ContexteAll>,
+)

@@ -1,0 +1,103 @@
+.textField {
+  width: 100%;
+}
+.divForm {
+  width: 100%;
+  margin-bottom: 20px;
+}
+.trueAndFalse {
+  width: 50%;
+  height: 50%;
+  border-radius: 50%;
+}
+
+.cards {
+  background-color: #f1f5f9;
+  width: 100%;
+}
+
+.eleve {
+  display: flex;
+}
+.btn-eleve {
+  position: absolute;
+  right: 10px;
+  top: 20px;
+}
+.actions {
+  margin-top: 10px;
+}
+.actions {
+  display: flex;
+}
+
+.bgLibre {
+  background-color: rgb(88, 194, 61);
+}
+.bgBloquer {
+  background-color: rgb(0, 0, 0);
+}
+.actions {
+  cursor: pointer;
+  justify-content: space-between;
+}
+.actions .first {
+  margin-right: 20px;
+  cursor: pointer;
+}
+.actions .second {
+  cursor: pointer;
+}
+.mesBouttons {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.mesBouttons .file {
+  background-color: rgb(21, 15, 54);
+  border-radius: 20px;
+  padding: 10px;
+  color: #f1f5f9;
+}
+.mesBouttons .liberer {
+  background-color: rgb(32, 5, 7);
+  border-radius: 20px;
+  padding: 10px;
+  color: #f1f5f9;
+}
+.mesBouttons > div > span {
+  margin-left: 10px;
+}
+.identification {
+  background-color: #f1f5f9;
+  border-radius: 10px;
+  margin-top: 5px;
+}
+.tableHead > thead {
+  background-color: rgb(10, 9, 48);
+  color: #f1f5f9;
+  border-radius: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+.anneeInfo {
+  width: 20%;
+}
+.info {
+  width: 60%;
+}
+.contentInfo {
+  text-align: center;
+  padding: 0px;
+  margin: 0px;
+}
+.contentInfo > p {
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+}
+.infoParcours {
+  background-color: #fff;
+  border-radius: 20px;
+  margin-bottom: 5px;
+}

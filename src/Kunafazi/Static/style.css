@@ -1,0 +1,26 @@
+thead > tr > td{
+    padding: 3px;
+}
+tr, td, .rowClasse{
+    border: 1px solid black;
+    font-size: 10px;
+    padding: 3px;
+  }
+  @page {
+    size: A4;
+    margin :0;
+    border :none;
+}
+@media print{
+    .container_main{
+        display: none;
+        background-color: white;
+        color: black;
+    }
+    
+}
+@media screen {
+    .tableData{
+        display: none;
+    }
+}

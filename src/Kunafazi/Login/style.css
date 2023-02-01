@@ -1,0 +1,54 @@
+/* FormDemo.css */
+
+.form-demo .card {
+  min-width: 100%;
+}
+
+.form-demo .card form {
+  margin-top: 2rem;
+}
+.form-demo .card .field {
+  margin-bottom: 1.5rem;
+}
+@media screen and (max-width: 960px) {
+  .form-demo .card {
+    width: 80%;
+  }
+}
+@media screen and (max-width: 500px) {
+  .form-demo {
+    margin: 20px;
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .form-demo .card {
+    padding: 20px;
+    background-color: #f1f5f7;
+    min-width: 400px;
+  }
+}
+.form-demo {
+  margin: 20px;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f1f5f7;
+  margin: 0;
+  padding: 0;
+}
+.form-demo .card {
+  padding: 20px;
+  background-color: #fff;
+  min-width: 400px;
+  height: 25rem;
+}
+
+.message {
+  position: absolute;
+  bottom: 2px;
+  color: rgb(7, 7, 36);
+  font-weight: bolder;
+}

@@ -1,0 +1,14 @@
+.enFonction {
+  background-color: green;
+  color: #fff;
+  border-radius: 20px;
+  font-size: 12px !important;
+  font-weight: bolder;
+}
+.bloquer {
+  background-color: red;
+  color: #fff;
+  border-radius: 20px;
+  font-size: 12px !important;
+  font-weight: bolder;
+}
