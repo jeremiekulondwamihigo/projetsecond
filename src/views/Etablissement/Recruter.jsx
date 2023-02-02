@@ -102,147 +102,147 @@ function Recruter(props) {
   }
 
   return (
-    <div>
-      <Paper elevation={0} style={{ padding: '0px' }}>
-        {message && (
-          <Stack sx={{ marginBottom: '15px' }}>
-            <Alert
-              variant="filled"
-              severity={message.error === false ? 'info' : 'warning'}
-            >
-              {message.message}
-            </Alert>
-          </Stack>
-        )}
+    <Paper elevation={0} style={{ padding: '0px' }}>
+      {message && (
+        <Stack sx={{ marginBottom: '15px' }}>
+          <Alert
+            variant="filled"
+            severity={message.error === false ? 'info' : 'warning'}
+          >
+            {message.message}
+          </Alert>
+        </Stack>
+      )}
 
-        <div className="container">
-          <div className="row">
-            <div className="col-md-6 col-sm-12 col-lg-6">
-              <TextField
-                autoComplete="off"
-                onChange={(e) => handleChange(e)}
-                type="text"
-                value={nom}
-                name="nom"
-                sx={{ marginBottom: '10px' }}
-                fullWidth
-                label="Entrez le nom *"
-                id="nom"
-              />
-              <TextField
-                autoComplete="off"
-                onChange={(e) => handleChange(e)}
-                value={postNom}
-                sx={{ marginBottom: '10px' }}
-                name="postNom"
-                fullWidth
-                label="Entrez le Post-nom *"
-              />
-              <TextField
-                autoComplete="off"
-                onChange={(e) => handleChange(e)}
-                value={prenom}
-                sx={{ marginBottom: '10px' }}
-                name="prenom"
-                fullWidth
-                label="Entrez le Prénom *"
-              />
-              <TextField
-                autoComplete="off"
-                onChange={(e) => handleChange(e)}
-                value={lieu_naissance}
-                sx={{ marginBottom: '10px' }}
-                name="lieu_naissance"
-                fullWidth
-                label="Lieu de naissance*"
-              />
-              <DatePickers
-                value={dateNaissance}
-                forma="dd/mm/yyyy"
-                setValue={setDateNaissance}
-                label="Entrez la date de naissance*"
-              />
-              <div style={{ marginBottom: '12px' }}>
-                <SelectOption
-                  value={valueGender}
-                  setValue={setValueGender}
-                  option={gender}
-                  title="Genre *"
-                />
-              </div>
-            </div>
-            <div className="col-md-6 col-sm-12 col-lg-6">
-              <TextField
-                autoComplete="off"
-                onChange={(e) => handleChange(e)}
-                value={nationalite}
-                name="nationalite"
-                sx={{ marginBottom: '10px' }}
-                fullWidth
-                label="Nationalité *"
-              />
-              <TextField
-                autoComplete="off"
-                onChange={(e) => handleChange(e)}
-                type="text"
-                value={nomPere}
-                name="nomPere"
-                sx={{ marginBottom: '10px' }}
-                fullWidth
-                label="Entrer le nom du père"
-              />
-              <TextField
-                autoComplete="off"
-                onChange={(e) => handleChange(e)}
-                type="text"
-                value={professionPere}
-                name="professionPere"
-                sx={{ marginBottom: '10px' }}
-                fullWidth
-                label="Profession du père"
-              />
-              <TextField
-                autoComplete="off"
-                onChange={(e) => handleChange(e)}
-                value={nomMere}
-                sx={{ marginBottom: '10px' }}
-                name="nomMere"
-                fullWidth
-                label="Entrez le nom de la mère"
-              />
-              <TextField
-                autoComplete="off"
-                onChange={(e) => handleChange(e)}
-                value={professionMere}
-                sx={{ marginBottom: '10px' }}
-                name="professionMere"
-                fullWidth
-                label="Profession de la mère"
-              />
-
-              <TextField
-                autoComplete="off"
-                onChange={(e) => handleChange(e)}
-                value={code_tuteur}
-                name="code_tuteur"
-                sx={{ marginBottom: '10px' }}
-                fullWidth
-                label="Entrez le code du tuteur"
+      <div className="container">
+        <div className="row">
+          <div
+            className="col-md-6 col-sm-12 col-lg-6">
+            <TextField
+              autoComplete="off"
+              onChange={(e) => handleChange(e)}
+              type="text"
+              value={nom}
+              name="nom"
+              sx={{ marginBottom: '10px', width: '100%' }}
+              fullWidth
+              label="Entrez le nom *"
+              id="nom"
+            />
+            <TextField
+              autoComplete="off"
+              onChange={(e) => handleChange(e)}
+              value={postNom}
+              sx={{ marginBottom: '10px' }}
+              name="postNom"
+              fullWidth
+              label="Entrez le Post-nom *"
+            />
+            <TextField
+              autoComplete="off"
+              onChange={(e) => handleChange(e)}
+              value={prenom}
+              sx={{ marginBottom: '10px' }}
+              name="prenom"
+              fullWidth
+              label="Entrez le Prénom *"
+            />
+            <TextField
+              autoComplete="off"
+              onChange={(e) => handleChange(e)}
+              value={lieu_naissance}
+              sx={{ marginBottom: '10px' }}
+              name="lieu_naissance"
+              fullWidth
+              label="Lieu de naissance*"
+            />
+            <DatePickers
+              value={dateNaissance}
+              forma="dd/mm/yyyy"
+              setValue={setDateNaissance}
+              label="Entrez la date de naissance*"
+            />
+            <div style={{ marginBottom: '12px' }}>
+              <SelectOption
+                value={valueGender}
+                setValue={setValueGender}
+                option={gender}
+                title="Genre *"
               />
             </div>
           </div>
-        </div>
+          <div className="col-md-6 col-sm-12 col-lg-6">
+            <TextField
+              autoComplete="off"
+              onChange={(e) => handleChange(e)}
+              value={nationalite}
+              name="nationalite"
+              sx={{ marginBottom: '10px' }}
+              fullWidth
+              label="Nationalité *"
+            />
+            <TextField
+              autoComplete="off"
+              onChange={(e) => handleChange(e)}
+              type="text"
+              value={nomPere}
+              name="nomPere"
+              sx={{ marginBottom: '10px' }}
+              fullWidth
+              label="Entrer le nom du père"
+            />
+            <TextField
+              autoComplete="off"
+              onChange={(e) => handleChange(e)}
+              type="text"
+              value={professionPere}
+              name="professionPere"
+              sx={{ marginBottom: '10px' }}
+              fullWidth
+              label="Profession du père"
+            />
+            <TextField
+              autoComplete="off"
+              onChange={(e) => handleChange(e)}
+              value={nomMere}
+              sx={{ marginBottom: '10px' }}
+              name="nomMere"
+              fullWidth
+              label="Entrez le nom de la mère"
+            />
+            <TextField
+              autoComplete="off"
+              onChange={(e) => handleChange(e)}
+              value={professionMere}
+              sx={{ marginBottom: '10px' }}
+              name="professionMere"
+              fullWidth
+              label="Profession de la mère"
+            />
 
-        <Button
-          onClick={(e) => handleSave(e)}
-          variant="contained"
-          endIcon={<Add />}
-          color="secondary"
-        >
-          Enregistrer
-        </Button>
-      </Paper>
-    </div>
+            <TextField
+              autoComplete="off"
+              onChange={(e) => handleChange(e)}
+              value={code_tuteur}
+              name="code_tuteur"
+              sx={{ marginBottom: '10px' }}
+              fullWidth
+              label="Entrez le code du tuteur"
+            />
+            <div style={{ marginTop: '15px' }}>
+              <Button
+                onClick={(e) => handleSave(e)}
+                variant="contained"
+                endIcon={<Add />}
+                color="secondary"
+              >
+                Enregistrer
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Paper>
   )
 }
 

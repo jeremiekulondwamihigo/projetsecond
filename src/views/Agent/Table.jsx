@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Avatar, Fab, Paper } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import Popup from 'Controls/Popup'
@@ -13,23 +13,39 @@ import { useHistory } from 'react-router-dom'
 import ManageHistoryIcon from '@mui/icons-material/ManageHistory'
 import Image from './Image.jsx'
 import Skeleton from '@mui/material/Skeleton'
+import jsCookie from 'js-cookie'
+import { CreateContexte } from 'ContextAll'
 
 function Table(props) {
+  const { user } = useContext(CreateContexte)
+
   const [openImage, setOpenImage] = useState(false)
   const [agentImage, setAgentImage] = useState()
   const config = {
     headers: {
       'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + localStorage.getItem('token'),
+      Authorization: 'Bearer ' + jsCookie.get('token'),
     },
   }
   const [openPopup, setOpenPopup] = useState(false)
   const [all_Agent, setAll_Agent] = useState([])
 
   const read_All_Agent = async () => {
-    const response = await axios.get(`${lien_read}/readagent`, config)
-    if (response) {
-      setAll_Agent(response.data)
+    if (user && user.fonction === 'etablissement') {
+      const { data } = user
+      const response = await axios.get(
+        `${lien_read}/agentListe/${data[0].codeEtablissement}`,
+        config,
+      )
+      if (response) {
+        console.log(response)
+        setAll_Agent(response.data)
+      }
+    } else {
+      const response = await axios.get(`${lien_read}/agentListe/tous`, config)
+      if (response) {
+        setAll_Agent(response.data)
+      }
     }
   }
 
@@ -74,7 +90,7 @@ function Table(props) {
             ) : (
               <img
                 src={`${lien_image_admin}/${params.row.filename}`}
-                alt={params.row.filename}
+                alt={params.row._id}
               />
             )}
           </Avatar>
@@ -103,14 +119,7 @@ function Table(props) {
       },
     },
     { field: 'fonction', headerName: 'Fonction', width: 100 },
-    {
-      field: 'domaine',
-      headerName: 'Domaine',
-      width: 100,
-      renderCell: (params) => {
-        return <>{params.row.domaine[0].title}</>
-      },
-    },
+
     { field: 'genre', headerName: 'Genre', width: 100 },
     {
       field: 'etat',
@@ -179,15 +188,15 @@ function Table(props) {
           </div>
         </Paper>
       )}
-      {
-        <Popup
-          visible={openPopup}
-          setVisible={setOpenPopup}
-          title="Enregistrer un enseignant"
-        >
-          <AddAgent read_All_Agent={read_All_Agent} />
-        </Popup>
-      }
+
+      <Popup
+        visible={openPopup}
+        setVisible={setOpenPopup}
+        title="Enregistrer un enseignant"
+      >
+        <AddAgent read_All_Agent={read_All_Agent} />
+      </Popup>
+
       <Popup
         visible={openImage}
         setVisible={setOpenImage}

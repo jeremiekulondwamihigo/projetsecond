@@ -170,7 +170,7 @@ function Header(props) {
                       to="/params/calendrier"
                       style={{ textDecoration: 'none' }}
                     >
-                      <DropdownItem tag="a">Calendrier scolaire</DropdownItem>
+                      <DropdownItem tag="p">Calendrier scolaire</DropdownItem>
                     </Link>
                   )}
                   {user.fonction === 'nationale' && (
@@ -178,7 +178,7 @@ function Header(props) {
                       to="/params/options"
                       style={{ textDecoration: 'none' }}
                     >
-                      <DropdownItem tag="a">Options et sections</DropdownItem>
+                      <DropdownItem tag="p">Options et sections</DropdownItem>
                     </Link>
                   )}
                   {user.fonction === 'nationale' && (
@@ -186,7 +186,7 @@ function Header(props) {
                       to="/params/classe"
                       style={{ textDecoration: 'none' }}
                     >
-                      <DropdownItem tag="a">Classes</DropdownItem>
+                      <DropdownItem tag="p">Classes</DropdownItem>
                     </Link>
                   )}
                   {user.fonction === 'nationale' && (
@@ -194,7 +194,7 @@ function Header(props) {
                       to="/params/province"
                       style={{ textDecoration: 'none' }}
                     >
-                      <DropdownItem tag="a">Province</DropdownItem>
+                      <DropdownItem tag="p">Province</DropdownItem>
                     </Link>
                   )}
 
@@ -202,9 +202,9 @@ function Header(props) {
                     to="/params/personnels"
                     style={{ textDecoration: 'none' }}
                   >
-                    <DropdownItem tag="a">Personnels</DropdownItem>
+                    <DropdownItem tag="p">Personnels</DropdownItem>
                   </Link>
-                  <DropdownItem tag="a" onClick={() => setOpenDomaine(true)}>
+                  <DropdownItem tag="p" onClick={() => setOpenDomaine(true)}>
                     Domaine agent
                   </DropdownItem>
                   {user.fonction === 'nationale' ||
@@ -213,7 +213,7 @@ function Header(props) {
                         to="/params/etablissement"
                         style={{ textDecoration: 'none' }}
                       >
-                        <DropdownItem tag="a">Etablissements</DropdownItem>
+                        <DropdownItem tag="p">Etablissements</DropdownItem>
                       </Link>
                     ))}
                 </DropdownMenu>

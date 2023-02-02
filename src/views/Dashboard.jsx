@@ -15,13 +15,11 @@ import {
   dashboardNASDAQChart,
 } from 'variables/charts.jsx'
 import UserConnect from './UserConnect'
-import jsCookie from 'js-cookie'
 
 function Dashboard() {
   const { user } = useContext(CreateContexte)
   const { fonction } = user
 
-  console.log(jsCookie.get('token'))
   return (
     <UserConnect>
       <div className="content">

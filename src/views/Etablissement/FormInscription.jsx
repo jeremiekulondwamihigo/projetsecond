@@ -52,7 +52,6 @@ function FormInscription(props) {
   const [niveau, setNiveau] = useState('')
   const [option, setOption] = useState([])
   const [selectOption, setSelectOption] = useState('')
-  console.log(option)
 
   const readOptionEtablissement = async () => {
     const response = await axios.get(

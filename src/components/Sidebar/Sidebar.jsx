@@ -12,7 +12,6 @@ var ps
 
 function Sidebar(props) {
   const { user } = useContext(CreateContexte)
-  console.log(user)
 
   const sidebar = React.useRef()
   // verifies if routeName is the one active (in browser input)

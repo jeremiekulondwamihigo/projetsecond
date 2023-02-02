@@ -3,18 +3,15 @@ import { InputText } from 'primereact/inputtext'
 import { lien_create, lien_read } from 'Utils'
 import axios from 'axios'
 import { Row, Col } from 'reactstrap'
-import { AutoComplete } from 'primereact/autocomplete'
-import { Dropdown } from 'primereact/dropdown'
-import { Calendar } from 'primereact/calendar'
 import './style.css'
 import { Button } from '@mui/material'
 import { CreateContexte } from 'ContextAll.jsx'
-import { Message } from 'primereact/message'
 import { TextField } from '@mui/material'
 import Alert from '@mui/material/Alert'
 import { isEmpty } from 'Utils'
 import AutoComplement from 'Controls/AutoComplete.jsx'
 import SelectOption from 'Controls/Select.jsx'
+import jsCookie from 'js-cookie'
 
 function AddAgent(props) {
   const { read_All_Agent } = props
@@ -70,7 +67,7 @@ function AddAgent(props) {
   const config = {
     headers: {
       'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + localStorage.getItem('token'),
+      Authorization: 'Bearer ' + jsCookie.get('token'),
     },
   }
 
@@ -83,9 +80,9 @@ function AddAgent(props) {
     loadDomaine()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  const [domaineSelect, setDomaineSelect] = useState()
+  const [domaineSelect, setDomaineSelect] = useState('')
 
-  const [genre, setGenre] = useState()
+  const [genre, setGenre] = useState('')
   const sexe = [
     { id: 1, title: 'Masculin', value: 'M' },
     { id: 2, title: 'Féminin', value: 'F' },
@@ -155,7 +152,7 @@ function AddAgent(props) {
                       label={index.title}
                       type="date"
                       onChange={(e) => handleChange(e)}
-                      defaultValue={Date.now()}
+                      defaultValue={new Date().toISOString().split('T')[0]}
                       style={{ width: '100%' }}
                       InputLabelProps={{
                         shrink: true,

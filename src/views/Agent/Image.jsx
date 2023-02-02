@@ -60,7 +60,6 @@ function Image({ concerner, loading }) {
               fullWidth
               type="file"
               label="Image"
-              q
               id="file"
             />
           </Grid>
