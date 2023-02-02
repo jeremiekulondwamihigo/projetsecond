@@ -30,12 +30,28 @@
     background-color: #f1f5f7;
     min-width: 340px;
   }
+  .form-demo {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f1f5f7 !important;
+    bottom: 0;
+  }
 }
 @media screen and (max-width: 400px) {
   .form-demo .card {
     margin: 100px !important;
     padding: 20px;
-    min-width: 400px;
+    min-width: 350px;
+  }
+  .form-demo {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f1f5f7 !important;
+    bottom: 0;
   }
 }
 .form-demo {
@@ -49,7 +65,7 @@
 .form-demo .card {
   margin: 100px !important;
   padding: 20px;
-  min-width: 400px;
+  min-width: 350px;
 }
 
 .message {
