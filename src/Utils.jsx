@@ -14,21 +14,21 @@ export const isEmpty = (value) => {
     return false
   }
 }
-export const lien_read = 'http://localhost:8080/bulletin/read'
-export const lien_create = 'http://localhost:8080/bulletin/create'
-export const lien_delete = 'http://localhost:8080/bulletin/delete'
-export const lien_update = 'http://localhost:8080/bulletin/update'
-export const lien_image_admin = 'http://localhost:8080/image'
-// export const lien_read =
-//   'https://expensive-puce-magpie.cyclic.app/bulletin/read'
-// export const lien_create =
-//   'https://expensive-puce-magpie.cyclic.app/bulletin/create'
-// export const lien_delete =
-//   'https://expensive-puce-magpie.cyclic.app/bulletin/delete'
-// export const lien_update =
-//   'https://expensive-puce-magpie.cyclic.app/bulletin/update'
+// export const lien_read = 'http://localhost:8080/bulletin/read'
+// export const lien_create = 'http://localhost:8080/bulletin/create'
+// export const lien_delete = 'http://localhost:8080/bulletin/delete'
+// export const lien_update = 'http://localhost:8080/bulletin/update'
+// export const lien_image_admin = 'http://localhost:8080/image'
+ export const lien_read =
+   'https://expensive-puce-magpie.cyclic.app/bulletin/read'
+ export const lien_create =
+   'https://expensive-puce-magpie.cyclic.app/bulletin/create'
+ export const lien_delete =
+   'https://expensive-puce-magpie.cyclic.app/bulletin/delete'
+ export const lien_update =
+   'https://expensive-puce-magpie.cyclic.app/bulletin/update'
 
-// export const lien_image_admin = 'https://expensive-puce-magpie.cyclic.app/image'
+ export const lien_image_admin = 'https://expensive-puce-magpie.cyclic.app/image'
 export const lien_image_eleve = 'image_eleve'
 
 export const config = {
