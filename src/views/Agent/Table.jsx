@@ -172,7 +172,7 @@ function Table(props) {
           onClick={() => setOpenPopup(true)}
         >
           <Add sx={{ mr: 1 }} />
-          Agent ushjkhsjghsdjghj
+          Agent
         </Fab>
       </div>
       {all_Agent && (
