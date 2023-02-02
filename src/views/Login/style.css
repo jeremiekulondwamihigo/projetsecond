@@ -11,6 +11,7 @@
     margin: 100px !important;
     padding: 20px;
     min-width: 400px;
+    background-color: #fff;
   }
   .form-demo {
     height: 100vh !important;
@@ -27,7 +28,7 @@
 @media screen and (max-width: 500px) {
   .form-demo .card {
     padding: 20px;
-    background-color: #f1f5f7;
+    background-color: #fff;
     min-width: 340px;
   }
   .form-demo {
@@ -44,6 +45,7 @@
     margin: 100px !important;
     padding: 20px;
     min-width: 350px;
+    background-color: #fff;
   }
   .form-demo {
     height: 100vh;
