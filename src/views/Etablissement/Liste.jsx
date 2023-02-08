@@ -7,39 +7,29 @@ import { DateActuelle } from 'Utils.jsx'
 import { DoDisturbAlt, East, Flight } from '@mui/icons-material'
 import { CreateContexte } from 'ContextAll.jsx'
 import { useEffect } from 'react'
-import { Avatar } from '@mui/material'
+import { Avatar, CircularProgress } from '@mui/material'
 import { useHistory } from 'react-router-dom'
 import jsCookie from 'js-cookie'
+import { useDispatch, useSelector } from 'react-redux'
+import { BloquerEleve } from 'Redux/Eleves'
 
 function MediaCard(props) {
-  const { rows, loadingEleve } = props
+  const { rows } = props
 
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + jsCookie.get('token'),
-    },
-  }
   const history = useHistory()
 
   const information = (_id) => {
     history.push('/params/informationEleve/' + _id)
   }
 
+  const dispatch = useDispatch()
+  const eleve = useSelector((state) => state.eleve)
   const ActionBloquer = (id, valeur) => {
-    axios
-      .put(
-        `${lien_update}/bloqueleve`,
-        {
-          id: id,
-          valeur: !valeur,
-        },
-        config,
-      )
-      .then((response) => {
-        console.log(response)
-        loadingEleve()
-      })
+    let data = {
+      id: id,
+      valeur: !valeur,
+    }
+    dispatch(BloquerEleve(data))
   }
 
   const column = [
@@ -48,7 +38,7 @@ function MediaCard(props) {
       headerName: '#',
       width: 50,
       renderCell: (params) => {
-        return <Avatar>{params.row.eleve[0].nom.substr(0, 1)}</Avatar>
+        return <Avatar>{params.row.eleveinscrit.nom.substr(0, 1)}</Avatar>
       },
     },
     {
@@ -57,7 +47,7 @@ function MediaCard(props) {
       width: 200,
       renderCell: (params) => {
         return (
-          <>{`${params.row.eleve[0].nom} ${params.row.eleve[0].postNom}`}</>
+          <>{`${params.row.eleveinscrit.nom} ${params.row.eleveinscrit.postNom}`}</>
         )
       },
     },
@@ -76,7 +66,7 @@ function MediaCard(props) {
       renderCell: (params) => {
         return (
           <>
-            {params.row.classe[0].niveau} <sup>e</sup>{' '}
+            {params.row.classe.niveau} <sup>e</sup>{' '}
           </>
         )
       },
@@ -86,7 +76,7 @@ function MediaCard(props) {
       headerName: 'Code option',
       width: 150,
       renderCell: (params) => {
-        return <>{params.row.classe[0].code_Option}</>
+        return <>{params.row.classe.code_Option}</>
       },
     },
     {
@@ -94,7 +84,7 @@ function MediaCard(props) {
       headerName: 'Annee scolaire',
       width: 110,
       renderCell: (params) => {
-        return <>{params.row.annee[0].annee}</>
+        return <>{params.row.annee.annee}</>
       },
     },
     {
@@ -106,7 +96,7 @@ function MediaCard(props) {
           <p
             style={{
               color: `${
-                params.row.classe[0].resultat > params.row.resultat
+                params.row.classe.resultat > params.row.resultat
                   ? 'red'
                   : 'blue'
               }`,
@@ -122,7 +112,7 @@ function MediaCard(props) {
       headerName: 'Date Naiss',
       width: 90,
       renderCell: (params) => {
-        return <>{DateActuelle(params.row.eleve[0].date_Naissance)}</>
+        return <>{DateActuelle(params.row.eleveinscrit.date_Naissance)}</>
       },
     },
     {
@@ -136,12 +126,14 @@ function MediaCard(props) {
               className="first"
               onClick={() => {
                 ActionBloquer(
-                  params.row.eleve[0]._id,
-                  params.row.eleve[0].libre,
+                  params.row.eleveinscrit._id,
+                  params.row.eleveinscrit.libre,
                 )
               }}
             >
-              {params.row.eleve[0].libre ? (
+              {eleve.updateEleve === 'pending' ? (
+                <CircularProgress size={24} color="info" />
+              ) : params.row.eleveinscrit.libre ? (
                 <Flight style={{ color: 'blue' }} />
               ) : (
                 <DoDisturbAlt style={{ color: 'red' }} />
@@ -149,7 +141,7 @@ function MediaCard(props) {
             </div>
             <div
               className="second"
-              onClick={() => information(params.row.eleve[0]._id)}
+              onClick={() => information(params.row.eleveinscrit._id)}
             >
               <East />
             </div>

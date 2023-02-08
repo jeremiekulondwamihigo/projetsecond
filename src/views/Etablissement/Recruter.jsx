@@ -1,268 +1,206 @@
-import React, { useState, useContext } from 'react'
-import { TextField, Button, Paper } from '@mui/material'
-import { Add } from '@mui/icons-material'
-import { lien_create } from 'Utils.jsx'
-import axios from 'axios'
-import { Alert, Stack } from '@mui/material'
-import DatePickers from 'Controls/DatePicker'
-import prototype from 'prop-types'
-import { CreateContexte } from 'ContextAll.jsx'
-import SelectOption from 'Controls/Select'
-import jsCookie from 'js-cookie'
+import React, { useState } from 'react'
+import { Card, CircularProgress, Fab } from '@mui/material'
+import RecruterForm from 'views/Etablissement/RecruterForm.jsx'
+import './style.css'
+import { useSelector } from 'react-redux'
+import { DateActuelle } from 'Utils.jsx'
+import { InputGroup, InputGroupText, InputGroupAddon, Input } from 'reactstrap'
+import { CardHeader, CardBody, CardFooter } from 'reactstrap'
+import { dashboardEmailStatisticsChart } from 'variables/charts.jsx'
+import { Pie } from 'react-chartjs-2'
+import Popup from 'Controls/Popup.jsx'
+import { Add, Delete, Edit } from '@mui/icons-material'
+import { isEmpty, lien_image_admin } from 'Utils.jsx'
+import ConfirmDialog from 'Controls/ConfirmDialog.jsx'
+import Avatar from '@mui/material/Avatar'
+import { useDispatch } from 'react-redux'
+import { deleteInfo } from 'Redux/Recruter'
 
-function Recruter(props) {
-  const { user } = useContext(CreateContexte)
-  const { data } = user
+function Recruter() {
+  const dispatch = useDispatch()
+  const eleve = useSelector((state) => state.recru)
+  const [open, setOpen] = useState(false)
+  const [update, setUpdate] = useState(false)
+  const [dataUpdate, setDataUpdate] = useState()
 
-  const [message, setMessage] = useState()
-
-  const today = new Date()
-
-  const gender = [
-    {
-      id: 'M',
-      title: 'Masculin',
-    },
-    {
-      id: 'F',
-      title: 'Féminin',
-    },
-  ]
-
-  const [valueGender, setValueGender] = useState('')
-
-  const [dateNaissance, setDateNaissance] = useState(null)
-
-  const [values, setValue] = useState({
-    code_tuteur: '',
-    nom: '',
-    postNom: '',
-    prenom: '',
-    lieu_naissance: '',
-    nationalite: '',
-    nomMere: '',
-    professionMere: '',
-    nomPere: '',
-    professionPere: '',
+  const updateFonction = (e, data) => {
+    e.preventDefault()
+    if (!isEmpty(data)) {
+      setDataUpdate(data)
+      setUpdate(true)
+    } else {
+      alert('Data not found')
+    }
+  }
+  const fonction = (e) => {
+    e.preventDefault()
+    setOpen(true)
+  }
+  const [confirmDialog, setConfirmDialog] = useState({
+    isOpen: false,
+    title: '',
+    subTitle: '',
   })
+  const deleteEleve = (index) => {
+    setConfirmDialog({
+      ...confirmDialog,
+      isOpen: false,
+    })
+    dispatch(deleteInfo(index))
+  }
 
-  const {
-    code_tuteur,
-    nom,
-    postNom,
-    prenom,
-    lieu_naissance,
-    nationalite,
-    nomMere,
-    professionMere,
-    nomPere,
-    professionPere,
-  } = values
-
+  const [filterFn, setFilterFn] = useState({
+    fn: (items) => {
+      return items
+    },
+  })
   const handleChange = (e) => {
-    const { value, name } = e.target
-    setValue({
-      ...values,
-      [name]: value,
+    let target = e.target.value.toUpperCase()
+
+    setFilterFn({
+      fn: (items) => {
+        if (target === '') {
+          return items
+        } else {
+          return items.filter((x) => x.nom.includes(target))
+        }
+      },
     })
   }
-
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + jsCookie.get('token'),
-    },
-  }
-  const handleSave = () => {
-    axios
-      .post(
-        `${lien_create}/eleve`,
-        {
-          id: today,
-          code_tuteur,
-          nom,
-          postNom,
-          prenom,
-          date_Naissance: dateNaissance,
-          lieu_naissance,
-          genre: valueGender,
-          agentSave: data[0].codeEtablissement,
-          nationalite,
-          nomMere,
-          professionMere,
-          nomPere,
-          professionPere,
-        },
-        config,
-      )
-      .then((response) => {
-        console.log(response)
-        setMessage(response.data)
-      })
-  }
-
   return (
-    <Paper elevation={0} style={{ padding: '0px' }}>
-      {message && (
-        <Stack sx={{ marginBottom: '15px' }}>
-          <Alert
-            variant="filled"
-            severity={message.error === false ? 'info' : 'warning'}
-          >
-            {message.message}
-          </Alert>
-        </Stack>
-      )}
+    <div className="container">
+      <div className="row">
+        <div
+          className="col-md-3 col-sm-12 col-lg-3"
+          style={{ marginBottom: '10px' }}
+        >
+          <InputGroup className="no-border">
+            <Input
+              placeholder="Chercher un élève"
+              onChange={(e) => handleChange(e)}
+            />
+            <InputGroupAddon addonType="append">
+              <InputGroupText>
+                <i className="nc-icon nc-zoom-split" />
+              </InputGroupText>
+            </InputGroupAddon>
+          </InputGroup>
+          <div className="carte">
+            {eleve.getEleves === 'pending' && eleve.recrutement.length < 1 ? (
+              <CircularProgress size={24} color="info" />
+            ) : (
+              filterFn.fn(eleve.recrutement).map((index, key) => {
+                return (
+                  <Card
+                    variant="outlined"
+                    sx={{
+                      width: '100%',
+                      margin: 0,
+                      cursor: 'pointer',
+                      padding: '5px',
+                      marginBottom: '10px',
+                    }}
+                    key={key}
+                  >
+                    <p className="nom">
+                      {index.nom + ' ' + index.postNom + ' ' + index.prenom}
+                    </p>
+                    <p className="autres">Genre : {index.genre}</p>
+                    <p className="autres">
+                      Né à {index.lieu_naissance}, le{' '}
+                      {DateActuelle(index.date_Naissance)}
+                    </p>
+                    <p className="autres">
+                      Code d'inscription : {index.codeInscription}
+                    </p>
+                    <p className="autres">Code élève : {index.code_eleve}</p>
+                    <p className="autres">Téléphone tuteur : ...............</p>
+                    <hr className="hr" />
 
-      <div className="container">
-        <div className="row">
-          <div
-            className="col-md-6 col-sm-12 col-lg-6">
-            <TextField
-              autoComplete="off"
-              onChange={(e) => handleChange(e)}
-              type="text"
-              value={nom}
-              name="nom"
-              sx={{ marginBottom: '10px', width: '100%' }}
-              fullWidth
-              label="Entrez le nom *"
-              id="nom"
-            />
-            <TextField
-              autoComplete="off"
-              onChange={(e) => handleChange(e)}
-              value={postNom}
-              sx={{ marginBottom: '10px' }}
-              name="postNom"
-              fullWidth
-              label="Entrez le Post-nom *"
-            />
-            <TextField
-              autoComplete="off"
-              onChange={(e) => handleChange(e)}
-              value={prenom}
-              sx={{ marginBottom: '10px' }}
-              name="prenom"
-              fullWidth
-              label="Entrez le Prénom *"
-            />
-            <TextField
-              autoComplete="off"
-              onChange={(e) => handleChange(e)}
-              value={lieu_naissance}
-              sx={{ marginBottom: '10px' }}
-              name="lieu_naissance"
-              fullWidth
-              label="Lieu de naissance*"
-            />
-            <DatePickers
-              value={dateNaissance}
-              forma="dd/mm/yyyy"
-              setValue={setDateNaissance}
-              label="Entrez la date de naissance*"
-            />
-            <div style={{ marginBottom: '12px' }}>
-              <SelectOption
-                value={valueGender}
-                setValue={setValueGender}
-                option={gender}
-                title="Genre *"
-              />
-            </div>
-          </div>
-          <div className="col-md-6 col-sm-12 col-lg-6">
-            <TextField
-              autoComplete="off"
-              onChange={(e) => handleChange(e)}
-              value={nationalite}
-              name="nationalite"
-              sx={{ marginBottom: '10px' }}
-              fullWidth
-              label="Nationalité *"
-            />
-            <TextField
-              autoComplete="off"
-              onChange={(e) => handleChange(e)}
-              type="text"
-              value={nomPere}
-              name="nomPere"
-              sx={{ marginBottom: '10px' }}
-              fullWidth
-              label="Entrer le nom du père"
-            />
-            <TextField
-              autoComplete="off"
-              onChange={(e) => handleChange(e)}
-              type="text"
-              value={professionPere}
-              name="professionPere"
-              sx={{ marginBottom: '10px' }}
-              fullWidth
-              label="Profession du père"
-            />
-            <TextField
-              autoComplete="off"
-              onChange={(e) => handleChange(e)}
-              value={nomMere}
-              sx={{ marginBottom: '10px' }}
-              name="nomMere"
-              fullWidth
-              label="Entrez le nom de la mère"
-            />
-            <TextField
-              autoComplete="off"
-              onChange={(e) => handleChange(e)}
-              value={professionMere}
-              sx={{ marginBottom: '10px' }}
-              name="professionMere"
-              fullWidth
-              label="Profession de la mère"
-            />
-
-            <TextField
-              autoComplete="off"
-              onChange={(e) => handleChange(e)}
-              value={code_tuteur}
-              name="code_tuteur"
-              sx={{ marginBottom: '10px' }}
-              fullWidth
-              label="Entrez le code du tuteur"
-            />
-            <div style={{ marginTop: '15px' }}>
-              <Button
-                onClick={(e) => handleSave(e)}
-                variant="contained"
-                endIcon={<Add />}
-                color="secondary"
-              >
-                Enregistrer
-              </Button>
-            </div>
+                    <div className="container-footer">
+                      <div className="divAvatar">
+                        <Avatar
+                          alt={index.nom}
+                          src={`${lien_image_admin}/${index.filename}`}
+                          className="avatar"
+                        />
+                      </div>
+                      <div className="icons foote">
+                        <Edit
+                          fontSize="small"
+                          className="icons edit"
+                          onClick={(e) => updateFonction(e, index)}
+                        />
+                        <Delete
+                          fontSize="small"
+                          color="secondary"
+                          className="icons"
+                          onClick={() => {
+                            setConfirmDialog({
+                              isOpen: true,
+                              title:
+                                'Voudriez-vous supprimé cette information ?',
+                              onConfirm: () => {
+                                deleteEleve(index._id)
+                              },
+                            })
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </Card>
+                )
+              })
+            )}
           </div>
         </div>
+        <div
+          className="col-md-9 col-sm-12 col-lg-9"
+          style={{ marginBottom: '10px' }}
+        >
+          <Card>
+            <CardHeader>
+              <p className="card-category">Last Campaign Performance</p>
+              <Fab
+                color="primary"
+                style={{ position: 'absolute', right: 30, top: 10 }}
+                onClick={(e) => fonction(e)}
+              >
+                <Add />
+              </Fab>
+            </CardHeader>
+            <CardBody style={{ height: '266px' }}>
+              <Pie
+                data={dashboardEmailStatisticsChart.data}
+                options={dashboardEmailStatisticsChart.options}
+              />
+            </CardBody>
+            <CardFooter>
+              <hr />
+              <div className="stats">
+                <i className="fa fa-calendar" /> Inscrit
+                {eleve.getEleves === 'pending' ? (
+                  <CircularProgress size={24} color="info" />
+                ) : (
+                  ` ${eleve.recrutement.length} élèves`
+                )}
+              </div>
+            </CardFooter>
+          </Card>
+        </div>
       </div>
-    </Paper>
+      <Popup visible={open} setVisible={setOpen} title="Recruter">
+        <RecruterForm />
+      </Popup>
+      <Popup visible={update} setVisible={setUpdate} title="Modifier">
+        <RecruterForm dataUpdate={dataUpdate} />
+      </Popup>
+      <ConfirmDialog
+        confirmDialog={confirmDialog}
+        setConfirmDialog={setConfirmDialog}
+      />
+    </div>
   )
 }
 
-Recruter.prototype = {
-  Autocompletion: prototype.node.isRequired,
-  DatePickers: prototype.node.isRequired,
-  dataLog: prototype.object.isRequired,
-  fechAgent: prototype.func.isRequired,
-  data: prototype.array,
-  message: prototype.any,
-  config: prototype.object.isRequired,
-  today: prototype.string.isRequired,
-  gender: prototype.array.isRequired,
-  valueGender: prototype.object.isRequired,
-  dateNaissance: prototype.any,
-  value: prototype.object.isRequired,
-  code_tuteur: prototype.string.isRequired,
-  nom: prototype.string.isRequired,
-  lieu_naissance: prototype.string.isRequired,
-  handleChange: prototype.func.isRequired,
-  handleSave: prototype.func.isRequired,
-}
 export default Recruter

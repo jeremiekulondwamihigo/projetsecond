@@ -9,6 +9,7 @@ import BasicTabs from 'Controls/Tabs'
 import { Person } from '@mui/icons-material'
 import { lien_update } from 'Utils'
 import jsCookie from 'js-cookie'
+import { useSelector } from 'react-redux'
 
 function FormInscription(props) {
   const { loadingEleve } = props
@@ -50,20 +51,8 @@ function FormInscription(props) {
     },
   ]
   const [niveau, setNiveau] = useState('')
-  const [option, setOption] = useState([])
+  const option = useSelector((state) => state.optionEtab.option)
   const [selectOption, setSelectOption] = useState('')
-
-  const readOptionEtablissement = async () => {
-    const response = await axios.get(
-      `${lien_read}/optionEtablissement/${data[0].codeEtablissement}`,
-      config,
-    )
-    setOption(response.data)
-  }
-  useEffect(() => {
-    readOptionEtablissement()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [codeEtablissement])
 
   const [codeInscription, setCodeInscription] = useState('')
   const id = new Date()

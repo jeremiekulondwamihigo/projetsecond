@@ -1,7 +1,9 @@
+import { CircularProgress } from '@mui/material'
 import { CreateContexte } from 'ContextAll.jsx'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Line, Pie } from 'react-chartjs-2'
 import { useSelector } from 'react-redux'
+import moment from 'moment'
 import {
   Card,
   CardHeader,
@@ -15,14 +17,28 @@ import {
   dashboardEmailStatisticsChart,
   dashboardNASDAQChart,
 } from 'variables/charts.jsx'
-import UserConnect from './UserConnect'
+import UserConnect from 'views/UserConnect.jsx'
+import { isEmpty } from 'Utils'
+import { useState } from 'react'
 
 function Dashboard() {
-  const { user } = useContext(CreateContexte)
-  const { fonction } = user
+  const eleve = useSelector((state) => state.infoEtab)
+  const annee = useSelector((state) => state.active)
+  const [donner, setDonner] = useState({ total: 0 })
 
-  const eleve = useSelector((state) => state.infoEtab.info)
-  console.log(eleve)
+  const loading = () => {
+    let a = 0
+    for (let i = 0; i < eleve.info[0].dejainscrit.length; i++) {
+      a = a + eleve.info[0].dejainscrit[i].nombre
+    }
+    setDonner({ ...donner, total: a })
+  }
+  useEffect(() => {
+    if (!isEmpty(eleve.info)) {
+      loading()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [eleve])
 
   return (
     <UserConnect>
@@ -34,15 +50,19 @@ function Dashboard() {
                 <Row>
                   <Col md="4" xs="5">
                     <div className="icon-big text-center icon-warning">
-                      <i className="nc-icon nc-globe text-warning" />
+                      <i className="nc-icon nc-single-02 text-warning" />
                     </div>
                   </Col>
                   <Col md="8" xs="7">
                     <div className="numbers">
-                      <p className="card-category">
-                        {fonction === 'etablissement' && 'Effectif'}
-                      </p>
-                      <CardTitle tag="p">200</CardTitle>
+                      <p className="card-category">Effectif</p>
+                      <CardTitle tag="p">
+                        {eleve.infoEtab === 'pending' || isEmpty(eleve.info) ? (
+                          <CircularProgress size={24} color="info" />
+                        ) : (
+                          eleve.info[0].eleves.length
+                        )}
+                      </CardTitle>
                       <p />
                     </div>
                   </Col>
@@ -52,7 +72,11 @@ function Dashboard() {
                 <hr />
                 <div className="stats">
                   <i className="fas fa-sync-alt" />
-                  Année scolaire 2020 - 2022
+                  {annee.getYear === 'pending' || isEmpty(annee.year) ? (
+                    <CircularProgress size={24} color="info" />
+                  ) : (
+                    `Année scolaire ${annee && annee.year.annee}`
+                  )}
                 </div>
               </CardFooter>
             </Card>
@@ -69,7 +93,13 @@ function Dashboard() {
                   <Col md="8" xs="7">
                     <div className="numbers">
                       <p className="card-category">Enseignants</p>
-                      <CardTitle tag="p">40</CardTitle>
+                      <CardTitle tag="p">
+                        {eleve.infoEtab === 'pending' || isEmpty(eleve.info) ? (
+                          <CircularProgress size={24} color="info" />
+                        ) : (
+                          eleve.info[0].agent.length
+                        )}
+                      </CardTitle>
                       <p />
                     </div>
                   </Col>
@@ -79,7 +109,11 @@ function Dashboard() {
                 <hr />
                 <div className="stats">
                   <i className="far fa-calendar" />
-                  Année scolaire 2020-2022
+                  {annee.getYear === 'pending' || isEmpty(annee.year) ? (
+                    <CircularProgress size={24} color="info" />
+                  ) : (
+                    `Année scolaire ${annee && annee.year.annee}`
+                  )}
                 </div>
               </CardFooter>
             </Card>
@@ -95,8 +129,14 @@ function Dashboard() {
                   </Col>
                   <Col md="8" xs="7">
                     <div className="numbers">
-                      <p className="card-category">Meesages</p>
-                      <CardTitle tag="p">23</CardTitle>
+                      <p className="card-category">Options</p>
+                      <CardTitle tag="p">
+                        {eleve.infoEtab === 'pending' || isEmpty(eleve.info) ? (
+                          <CircularProgress size={24} color="info" />
+                        ) : (
+                          eleve.info[0].code_option.length
+                        )}
+                      </CardTitle>
                       <p />
                     </div>
                   </Col>
@@ -106,7 +146,11 @@ function Dashboard() {
                 <hr />
                 <div className="stats">
                   <i className="far fa-clock" />
-                  Année scolaire 2021-2022
+                  {annee.getYear === 'pending' || isEmpty(annee.year) ? (
+                    <CircularProgress size={24} color="info" />
+                  ) : (
+                    `Année scolaire ${annee && annee.year.annee}`
+                  )}
                 </div>
               </CardFooter>
             </Card>
@@ -117,13 +161,19 @@ function Dashboard() {
                 <Row>
                   <Col md="4" xs="5">
                     <div className="icon-big text-center icon-warning">
-                      <i className="nc-icon nc-favourite-28 text-primary" />
+                      <i className="nc-icon nc-single-02 text-primary" />
                     </div>
                   </Col>
                   <Col md="8" xs="7">
                     <div className="numbers">
-                      <p className="card-category">Tuteurs</p>
-                      <CardTitle tag="p">200</CardTitle>
+                      <p className="card-category">Total inscrit</p>
+                      <CardTitle tag="p">
+                        {eleve.infoEtab === 'pending' || isEmpty(eleve.info) ? (
+                          <CircularProgress size={24} color="info" />
+                        ) : (
+                          donner.total
+                        )}
+                      </CardTitle>
                       <p />
                     </div>
                   </Col>
@@ -133,7 +183,7 @@ function Dashboard() {
                 <hr />
                 <div className="stats">
                   <i className="fas fa-sync-alt" />
-                  Année scolaire 2020-2021
+                  Toute les années
                 </div>
               </CardFooter>
             </Card>
@@ -144,8 +194,7 @@ function Dashboard() {
           <Col md="4">
             <Card>
               <CardHeader>
-                <CardTitle tag="h5">Email Statistics</CardTitle>
-                <p className="card-category">Last Campaign Performance</p>
+                <CardTitle tag="h5">Chaque option</CardTitle>
               </CardHeader>
               <CardBody style={{ height: '266px' }}>
                 <Pie
@@ -160,37 +209,41 @@ function Dashboard() {
                   <i className="fa fa-circle text-danger" /> Deleted{' '}
                   <i className="fa fa-circle text-gray" /> Unopened
                 </div>
-                <hr />
-                <div className="stats">
-                  <i className="fa fa-calendar" /> Number of emails sent
-                </div>
               </CardFooter>
             </Card>
           </Col>
           <Col md="8">
             <Card className="card-chart">
-              <CardHeader>
-                <CardTitle tag="h5">Statistique des tuteurs</CardTitle>
-                <p className="card-category">Toute les années confondues</p>
-              </CardHeader>
-              <CardBody>
-                <Line
-                  data={dashboardNASDAQChart.data}
-                  options={dashboardNASDAQChart.options}
-                  width={400}
-                  height={100}
-                />
-              </CardBody>
-              <CardFooter>
-                <div className="chart-legend">
-                  <i className="fa fa-circle text-info" /> Tesla Model S{' '}
-                  <i className="fa fa-circle text-warning" /> BMW 5 Series
-                </div>
-                <hr />
-                <div className="card-stats">
-                  <i className="fa fa-check" /> Data information certified
-                </div>
-              </CardFooter>
+              {eleve.infoEtab === 'pending' || isEmpty(eleve.info) ? (
+                <CircularProgress size={24} color="info" />
+              ) : (
+                <>
+                  <CardHeader>
+                    <CardTitle tag="h5">Statistique d'inscriptions</CardTitle>
+                  </CardHeader>
+                  <CardBody>
+                    <Line
+                      data={dashboardNASDAQChart.data(
+                        eleve.info[0].dejainscrit,
+                      )}
+                      options={dashboardNASDAQChart.options}
+                      width={400}
+                      height={100}
+                    />
+                  </CardBody>
+                  <CardFooter>
+                    <div className="chart-legend">
+                      <i className="fa fa-circle text-info" /> Tesla Model S{' '}
+                      <i className="fa fa-circle text-warning" /> BMW 5 Series
+                    </div>
+                    <hr />
+                    <div className="card-stats">
+                      <i className="fa fa-check" /> Ecole créée{' '}
+                      {moment(new Date(eleve.info[0].id)).fromNow()}
+                    </div>
+                  </CardFooter>
+                </>
+              )}
             </Card>
           </Col>
         </Row>

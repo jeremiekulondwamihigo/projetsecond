@@ -16,15 +16,26 @@ import LoginLaYout from 'layouts/LoginLayout.jsx'
 import ContexteAll from 'ContextAll'
 import ReactHookFormDemo from 'Essaie'
 import { Provider } from 'react-redux'
-import { configureStore } from '@reduxjs/toolkit'
-import readEtablissement from 'Redux/Read.jsx'
+import { store } from 'Store.jsx'
+import moment from 'moment'
 
-const store = configureStore({
-  reducer: {
-    users: readEtablissement,
+moment.locale('fr', {
+  relativeTime: {
+    future: 'dans %s',
+    past: 'il y a %s',
+    s: 'quelques secondes',
+    m: 'une minute',
+    mm: '%d minutes',
+    h: 'une heure',
+    hh: '%d heures',
+    d: 'un jour',
+    dd: '%d jours',
+    M: 'un mois',
+    MM: '%d mois',
+    y: ' un an',
+    yy: '%d ans',
   },
 })
-
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
 root.render(

@@ -1,28 +1,3 @@
-// import React from 'react'
-// import { Dialog } from 'primereact/dialog'
-
-// const DialogDemo = ({ visible, children, setVisible, title }) => {
-//   const onHide = () => {
-//     setVisible(false)
-//   }
-
-//   return (
-//     <div className="dialog-demo">
-//       <div className="card">
-//         <Dialog
-//           header={title}
-//           visible={visible}
-//           style={{ width: '50vw' }}
-//           onHide={() => onHide()}
-//         >
-//           {children}
-//         </Dialog>
-//       </div>
-//     </div>
-//   )
-// }
-// export default DialogDemo
-
 import * as React from 'react'
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'

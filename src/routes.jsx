@@ -1,27 +1,19 @@
 import Dashboard from 'views/Dashboard.jsx'
 import Notifications from 'views/Notifications.jsx'
-import Icons from 'views/Icons.jsx'
 import Typography from 'views/Typography.jsx'
 import TableList from 'views/Tables.jsx'
 import UserPage from 'views/User.jsx'
 import Eleves from 'views/Eleves'
+import DashboardEtabli from 'views/Dashboard/Etablissement.jsx'
 
 var route = [
   {
     path: '/dashboard',
     name: 'Dashboard',
     icon: 'nc-icon nc-bank',
-    component: Dashboard,
+    component: DashboardEtabli,
     layout: '/admin',
-    fonction: 'all',
-  },
-  {
-    path: '/icons',
-    name: 'Icons',
-    icon: 'nc-icon nc-diamond',
-    component: Icons,
-    layout: '/admin',
-    fonction: 'all',
+    fonction: 'etablissement',
   },
   {
     path: '/notifications',
@@ -57,7 +49,7 @@ var route = [
     icon: 'nc-icon nc-single-02',
     component: Eleves,
     layout: '/admin',
-    fonction: 'all',
+    fonction: 'etablissement',
   },
   {
     path: '/resultat',

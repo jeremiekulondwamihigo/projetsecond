@@ -23,7 +23,6 @@ import routeOther from 'routesOther.jsx'
 import { CreateContexte } from 'ContextAll.jsx'
 import DialogDemo from 'Controls/Popup'
 import DomaineAgent from 'views/DomaineAgent'
-import { Paper } from '@mui/material'
 
 function Header(props) {
   const { user, LogOut, setValueRecherche } = useContext(CreateContexte)

@@ -101,3 +101,68 @@
   border-radius: 20px;
   margin-bottom: 5px;
 }
+
+.nom {
+  font-size: 12px;
+  font-weight: bolder;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+.autres {
+  font-size: 11px;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.icons {
+  margin: 0px;
+  text-align: right;
+  margin-left: 15px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hr {
+  margin: 0px;
+  margin-bottom: 2px;
+}
+.carte {
+  height: 60vh;
+  overflow: auto;
+}
+.carte::-webkit-scrollbar {
+  width: 5px;
+  margin-left: 5px;
+}
+.carte::-webkit-scrollbar-track {
+  background: #c9cacc;
+}
+.carte::-webkit-scrollbar-thumb {
+  background: #3d5585;
+  border-radius: 10px;
+}
+.carte::-webkit-scrollbar-thumb:hover {
+  background: #01143b;
+}
+.avatar {
+  margin: 0;
+  padding: 0px;
+  margin-bottom: 0;
+}
+.container-footer {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+.divAvatar {
+  padding-top: 10px;
+  margin: 0;
+  height: 35px;
+  padding: 0px;
+}
