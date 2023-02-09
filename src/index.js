@@ -39,9 +39,9 @@ moment.locale('fr', {
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
 root.render(
-  <ContexteAll>
-    <Provider store={store}>
-      <BrowserRouter>
+  <Provider store={store}>
+    <BrowserRouter>
+      <ContexteAll>
         <Switch>
           <Route path="/params" render={(props) => <Other {...props} />} />
           <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
@@ -49,7 +49,7 @@ root.render(
           <Route path="/essaie" component={ReactHookFormDemo} />
           <Redirect to="/users/login" />
         </Switch>
-      </BrowserRouter>
-    </Provider>
-  </ContexteAll>,
+      </ContexteAll>
+    </BrowserRouter>
+  </Provider>,
 )

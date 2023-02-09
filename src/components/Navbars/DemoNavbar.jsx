@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import React, { useContext, useState, useLayoutEffect } from 'react'
+import { Link, useLocation, useHistory } from 'react-router-dom'
 import {
   Collapse,
   Navbar,
@@ -26,10 +26,25 @@ import DomaineAgent from 'views/DomaineAgent'
 
 function Header(props) {
   const { user, LogOut, setValueRecherche } = useContext(CreateContexte)
+  const history = useHistory()
+  useLayoutEffect(() => {
+    console.log('use effect')
+    if (
+      user === 'Not authorization to access this id' ||
+      user === 'Not authorization to access this route' ||
+      !user.fonction
+    ) {
+      history.push('/users/login')
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const { data } = user
-  const denomination = data[0].denomination
+  const denomination = data
     ? data[0].denomination
-    : data[0].etablissement
+      ? data[0].denomination
+      : data[0].etablissement
+    : null
   const [openDomaine, setOpenDomaine] = useState(false)
 
   const handleChange = (e) => {

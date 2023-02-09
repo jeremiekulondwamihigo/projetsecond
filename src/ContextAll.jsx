@@ -4,12 +4,13 @@ import './style.css'
 import axios from 'axios'
 import jsCookie from 'js-cookie'
 import { isEmpty } from 'Utils'
+import { useHistory } from 'react-router-dom'
 export const CreateContexte = createContext()
 
 const config = {
   headers: {
     'Content-Type': 'application/json',
-    Authorization: 'Bearer ' + jsCookie.get('token'),
+    authorization: 'Bearer ' + jsCookie.get('token'),
   },
 }
 
@@ -41,10 +42,10 @@ function useFetch(url) {
 
 const ContexteAll = (props) => {
   const [items, loading] = useFetch(`${lien_read}/user`)
-
+  const history = useHistory()
   const LogOut = () => {
-    localStorage.removeItem('token')
-    window.location.replace('/users/login')
+    jsCookie.remove('token')
+    history.push('/users/login')
   }
 
   const [valueRecherche, setValueRecherche] = useState('')

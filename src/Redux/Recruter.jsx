@@ -162,6 +162,50 @@ const EleveRecru = createSlice({
         updateRecruError: '',
       }
     },
+    [modifierInfo.pending]: (state, action) => {
+      return {
+        ...state,
+        addNewRecru: '',
+        addNewRecruError: '',
+        getRecru: '',
+        getRecruError: '',
+        deleteRecru: '',
+        deleteRecruError: '',
+        updateRecru: 'pending',
+        updateRecruError: '',
+      }
+    },
+    [modifierInfo.fulfilled]: (state, action) => {
+      const updatings = state.recrutement.map((x) =>
+        x._id === action.payload._id ? action.payload : x,
+      )
+
+      return {
+        ...state,
+        recrutement: updatings,
+        addNewRecru: '',
+        addNewRecruError: '',
+        getRecru: '',
+        getRecruError: '',
+        deleteRecru: '',
+        deleteRecruError: '',
+        updateRecru: 'success',
+        updateRecruError: '',
+      }
+    },
+    [modifierInfo.rejected]: (state, action) => {
+      return {
+        ...state,
+        addNewRecru: '',
+        addNewRecruError: '',
+        getRecru: '',
+        getRecruError: '',
+        deleteRecru: '',
+        deleteRecruError: '',
+        updateRecru: 'rejected',
+        updateRecruError: action.payload,
+      }
+    },
     [deleteInfo.pending]: (state, action) => {
       return {
         ...state,
@@ -205,49 +249,6 @@ const EleveRecru = createSlice({
         updateRecruError: '',
       }
     },
-  },
-  [modifierInfo.pending]: (state, action) => {
-    return {
-      ...state,
-      addNewRecru: '',
-      addNewRecruError: '',
-      getRecru: '',
-      getRecruError: '',
-      deleteRecru: '',
-      deleteRecruError: '',
-      updateRecru: 'pending',
-      updateRecruError: '',
-    }
-  },
-  [modifierInfo.fulfilled]: (state, action) => {
-    const updatings = state.recrutement.map((x) =>
-      x._id === action.payload._id ? action.payload : x,
-    )
-    return {
-      ...state,
-      recrutement: updatings,
-      addNewRecru: '',
-      addNewRecruError: '',
-      getRecru: '',
-      getRecruError: '',
-      deleteRecru: '',
-      deleteRecruError: '',
-      updateRecru: 'success',
-      updateRecruError: '',
-    }
-  },
-  [modifierInfo.rejected]: (state, action) => {
-    return {
-      ...state,
-      addNewRecru: '',
-      addNewRecruError: '',
-      getRecru: '',
-      getRecruError: '',
-      deleteRecru: '',
-      deleteRecruError: '',
-      updateRecru: 'rejected',
-      updateRecruError: action.payload,
-    }
   },
 })
 

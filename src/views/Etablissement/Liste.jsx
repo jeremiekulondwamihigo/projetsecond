@@ -9,9 +9,8 @@ import { CreateContexte } from 'ContextAll.jsx'
 import { useEffect } from 'react'
 import { Avatar, CircularProgress } from '@mui/material'
 import { useHistory } from 'react-router-dom'
-import jsCookie from 'js-cookie'
 import { useDispatch, useSelector } from 'react-redux'
-import { BloquerEleve } from 'Redux/Eleves'
+import { bloquerEleve } from 'Redux/Inscription'
 
 function MediaCard(props) {
   const { rows } = props
@@ -23,15 +22,15 @@ function MediaCard(props) {
   }
 
   const dispatch = useDispatch()
-  const eleve = useSelector((state) => state.eleve)
   const ActionBloquer = (id, valeur) => {
     let data = {
       id: id,
       valeur: !valeur,
     }
-    dispatch(BloquerEleve(data))
+    dispatch(bloquerEleve(data))
   }
 
+  const eleve = useSelector((state) => state.inscrit)
   const column = [
     {
       field: 'filename',
@@ -44,10 +43,10 @@ function MediaCard(props) {
     {
       field: 'nom',
       headerName: 'Nom & PostNom',
-      width: 200,
+      width: 280,
       renderCell: (params) => {
         return (
-          <>{`${params.row.eleveinscrit.nom} ${params.row.eleveinscrit.postNom}`}</>
+          <>{`${params.row.eleveinscrit.nom} ${params.row.eleveinscrit.postNom} ${params.row.eleveinscrit.prenom}`}</>
         )
       },
     },
@@ -57,6 +56,14 @@ function MediaCard(props) {
       width: 100,
       renderCell: (params) => {
         return <>{params.row.code_eleve}</>
+      },
+    },
+    {
+      field: 'codeInscription',
+      headerName: 'Code inscription',
+      width: 100,
+      renderCell: (params) => {
+        return <>{params.row.codeInscription}</>
       },
     },
     {
@@ -79,34 +86,7 @@ function MediaCard(props) {
         return <>{params.row.classe.code_Option}</>
       },
     },
-    {
-      field: 'annee',
-      headerName: 'Annee scolaire',
-      width: 110,
-      renderCell: (params) => {
-        return <>{params.row.annee.annee}</>
-      },
-    },
-    {
-      field: 'resultat',
-      headerName: 'Résultat',
-      width: 70,
-      renderCell: (params) => {
-        return (
-          <p
-            style={{
-              color: `${
-                params.row.classe.resultat > params.row.resultat
-                  ? 'red'
-                  : 'blue'
-              }`,
-            }}
-          >
-            {params.row.resultat} %
-          </p>
-        )
-      },
-    },
+
     {
       field: 'naissance',
       headerName: 'Date Naiss',
@@ -131,7 +111,7 @@ function MediaCard(props) {
                 )
               }}
             >
-              {eleve.updateEleve === 'pending' ? (
+              {eleve.bloquerInscrit === 'pending' ? (
                 <CircularProgress size={24} color="info" />
               ) : params.row.eleveinscrit.libre ? (
                 <Flight style={{ color: 'blue' }} />

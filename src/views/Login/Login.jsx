@@ -10,6 +10,7 @@ import { lien_create } from 'Utils.jsx'
 import axios from 'axios'
 import { Message } from 'primereact/message'
 import { setCookie } from 'Controls/Cookie'
+import { useHistory } from 'react-router-dom'
 
 export const ReactHookFormDemo = () => {
   const defaultValues = {
@@ -28,6 +29,7 @@ export const ReactHookFormDemo = () => {
   const [message, setMessage] = useState('')
   const [loading, setLoading] = useState(false)
 
+  const history = useHistory()
   const onSubmit = async (data) => {
     setLoading(true)
     const response = await axios.post(`${lien_create}/login`, {
@@ -36,7 +38,7 @@ export const ReactHookFormDemo = () => {
     })
     if (response.data.sucess) {
       setCookie('token', response.data.token)
-      window.location.replace('/admin/dashboard')
+      history.push('/admin/dashboard')
     } else {
       setMessage(response.data.error)
       reset()

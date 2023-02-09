@@ -1,15 +1,22 @@
-import React, { useEffect, useState, useContext } from 'react'
-import { Grid, TextField, Button, Stack, Alert } from '@mui/material'
+import React, { useState, useContext } from 'react'
+import {
+  Grid,
+  TextField,
+  Button,
+  Stack,
+  Alert,
+  CircularProgress,
+} from '@mui/material'
 import Autocompletion from 'Controls/AutoComplete'
 import axios from 'axios'
-import { lien_create, lien_read } from 'Utils.jsx'
 import ProtoType from 'prop-types'
 import { CreateContexte } from 'ContextAll.jsx'
 import BasicTabs from 'Controls/Tabs'
 import { Person } from '@mui/icons-material'
 import { lien_update } from 'Utils'
 import jsCookie from 'js-cookie'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { addNewInscrit } from 'Redux/Inscription'
 
 function FormInscription(props) {
   const { loadingEleve } = props
@@ -57,72 +64,82 @@ function FormInscription(props) {
   const [codeInscription, setCodeInscription] = useState('')
   const id = new Date()
   const [message, setMessage] = useState()
+  const dispatch = useDispatch()
 
   const postEleve = async (e) => {
     e.preventDefault()
-    const response = await axios.post(
-      `${lien_create}/inscription`,
-      {
-        niveau: niveau.id,
-        codeEtablissement,
-        codeInscription,
-        code_Option:
-          niveau.id > 5 ? 'Education de Base' : selectOption.code_Option,
-        id,
-      },
-      config,
-    )
-    loadingEleve()
-    setMessage(response.data)
+    const data = {
+      niveau: niveau.id,
+      codeEtablissement,
+      codeInscription,
+      code_Option:
+        niveau.id > 5 ? 'Education de Base' : selectOption.code_Option,
+      id,
+    }
+    dispatch(addNewInscrit(data))
   }
+  const eleveinscrit = useSelector((state) => state.inscrit)
 
   function Recruter() {
     return (
-      <div>
-        <div>
-          <Grid style={{ marginRight: '10px' }}>
-            <div style={{ marginBottom: '15px' }}>
+      <div style={{ width: '25rem' }}>
+        {eleveinscrit.addNewInscrit === 'success' ? (
+          <Alert severity="success">Enregistrement effectuer</Alert>
+        ) : null}
+        {eleveinscrit.addNewInscrit === 'rejected' ? (
+          <Alert severity="error">{eleveinscrit.addNewInscritError}</Alert>
+        ) : null}
+
+        <Grid style={{ marginTop: '10px' }}>
+          <div style={{ marginBottom: '15px' }}>
+            <Autocompletion
+              sx={{ marginBottom: '10px', width: '100%' }}
+              value={niveau}
+              setValue={setNiveau}
+              options={items}
+              title="Classe"
+            />
+          </div>
+          <div style={{ marginBottom: '15px' }}>
+            {niveau.id < 5 && (
               <Autocompletion
                 sx={{ marginBottom: '10px' }}
-                value={niveau}
-                setValue={setNiveau}
-                options={items}
-                title="Classe"
+                value={selectOption}
+                setValue={setSelectOption}
+                options={option}
+                title="Séléctionner l'option"
               />
-            </div>
-            <div style={{ marginBottom: '15px' }}>
-              {niveau.id < 5 && (
-                <Autocompletion
-                  sx={{ marginBottom: '10px' }}
-                  value={selectOption}
-                  setValue={setSelectOption}
-                  options={option}
-                  title="Séléctionner l'option"
-                />
-              )}
-            </div>
-            <div>
-              <TextField
-                sx={{ marginBottom: '10px' }}
-                fullWidth
-                value={codeInscription}
-                id=""
-                name="codeInscription"
-                label="Code inscription"
-                onChange={(e) => setCodeInscription(e.target.value)}
-              />
-            </div>
+            )}
+          </div>
+          <div>
+            <TextField
+              sx={{ marginBottom: '10px' }}
+              fullWidth
+              value={codeInscription}
+              id=""
+              name="codeInscription"
+              label="Code inscription"
+              onChange={(e) => setCodeInscription(e.target.value)}
+            />
+          </div>
 
-            <Button
-              color="primary"
-              variant="contained"
-              style={{ width: '100%' }}
-              onClick={(e) => postEleve(e)}
-            >
-              Inscrire
-            </Button>
-          </Grid>
-        </div>
+          <Button
+            color="primary"
+            variant="contained"
+            style={{ width: '100%' }}
+            onClick={(e) => postEleve(e)}
+            disabled={eleveinscrit.addNewInscrit === 'pending' ? true : false}
+          >
+            {eleveinscrit.addNewInscrit === 'pending' ? (
+              <CircularProgress
+                size={24}
+                color="info"
+                style={{ marginRight: '10px' }}
+              />
+            ) : null}
+            Inscrire
+          </Button>
+        </Grid>
       </div>
     )
   }
@@ -148,7 +165,7 @@ function FormInscription(props) {
 
   function Existant() {
     return (
-      <div>
+      <div style={{ width: '25rem' }}>
         <div>
           <TextField
             sx={{ marginBottom: '10px' }}

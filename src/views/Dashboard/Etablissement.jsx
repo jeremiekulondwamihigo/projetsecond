@@ -1,6 +1,5 @@
 import { CircularProgress } from '@mui/material'
-import { CreateContexte } from 'ContextAll.jsx'
-import React, { useContext, useEffect } from 'react'
+import React, {  useEffect } from 'react'
 import { Line, Pie } from 'react-chartjs-2'
 import { useSelector } from 'react-redux'
 import moment from 'moment'
@@ -17,7 +16,6 @@ import {
   dashboardEmailStatisticsChart,
   dashboardNASDAQChart,
 } from 'variables/charts.jsx'
-import UserConnect from 'views/UserConnect.jsx'
 import { isEmpty } from 'Utils'
 import { useState } from 'react'
 
@@ -41,7 +39,6 @@ function Dashboard() {
   }, [eleve])
 
   return (
-    <UserConnect>
       <div className="content">
         <Row>
           <Col lg="3" md="6" sm="6">
@@ -248,7 +245,6 @@ function Dashboard() {
           </Col>
         </Row>
       </div>
-    </UserConnect>
   )
 }
 

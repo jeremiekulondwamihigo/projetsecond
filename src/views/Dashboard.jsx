@@ -15,7 +15,6 @@ import {
   dashboardEmailStatisticsChart,
   dashboardNASDAQChart,
 } from 'variables/charts.jsx'
-import UserConnect from './UserConnect'
 
 function Dashboard() {
   const { user } = useContext(CreateContexte)
@@ -25,7 +24,6 @@ function Dashboard() {
   console.log(eleve)
 
   return (
-    <UserConnect>
       <div className="content">
         <Row>
           <Col lg="3" md="6" sm="6">
@@ -195,7 +193,6 @@ function Dashboard() {
           </Col>
         </Row>
       </div>
-    </UserConnect>
   )
 }
 

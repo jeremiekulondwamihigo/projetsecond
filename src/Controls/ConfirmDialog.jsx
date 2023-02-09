@@ -11,12 +11,12 @@ export default function ConfirmDialog(props) {
   const { confirmDialog, setConfirmDialog } = props
 
   return (
-    <Dialog open={confirmDialog.isOpen} className={style.dialog}>
+    <Dialog open={confirmDialog.isOpen} style={style.dialog}>
       <DialogTitle></DialogTitle>
-      <DialogContent className={style.contentDialog}>
+      <DialogContent style={style.contentDialog}>
         <Typography variant="h7">{confirmDialog.title}</Typography>
       </DialogContent>
-      <DialogActions className={style.contentButton}>
+      <DialogActions style={style.contentButton}>
         <button
           className="btn btn-danger"
           onClick={() => setConfirmDialog({ ...confirmDialog, isOpen: false })}

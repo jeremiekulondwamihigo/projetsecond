@@ -88,21 +88,21 @@ function Recruter(props) {
       nomPere,
       professionPere,
     }
-    dispatch(addElevePremiere(donner))
+    if (dataUpdate) {
+      let donner = { id: dataUpdate._id, data: values }
+      dispatch(modifierInfo(donner))
+    } else {
+      dispatch(addElevePremiere(donner))
+    }
   }
 
   useEffect(() => {
     if (!isEmpty(dataUpdate)) {
-      setValue({ ...dataUpdate })
+      setValue({ ...values, ...dataUpdate })
       setValueGender(...dataUpdate.genre)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataUpdate])
-
-  const updateEleve = (e) => {
-    e.preventDefault()
-    let donner = { id: dataUpdate._id, data: values }
-    dispatch(modifierInfo(donner))
-  }
 
   return (
     <Paper elevation={0} style={{ padding: '0px' }}>
@@ -236,9 +236,7 @@ function Recruter(props) {
             />
             <div style={{ marginTop: '15px' }}>
               <Button
-                onClick={
-                  dataUpdate ? (e) => updateEleve(e) : (e) => handleSave(e)
-                }
+                onClick={(e) => handleSave(e)}
                 variant="contained"
                 endIcon={dataUpdate ? <Edit /> : <Add />}
                 color={dataUpdate ? 'secondary' : 'primary'}

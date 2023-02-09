@@ -8,7 +8,7 @@ import './style.css'
 import { useSelector } from 'react-redux'
 
 function ElevesInscrit() {
-  const row = useSelector((state) => state.eleve.eleve)
+  const row = useSelector((state) => state.inscrit.inscrit)
 
   const [open, setOpen] = useState(false)
   return (
