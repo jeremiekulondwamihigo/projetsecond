@@ -12,8 +12,8 @@ import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { bloquerEleve } from 'Redux/Inscription'
 
-function MediaCard(props) {
-  const { rows } = props
+function MediaCard() {
+  const rows = useSelector((state) => state.inscrit)
 
   const history = useHistory()
 
@@ -159,10 +159,12 @@ function MediaCard(props) {
 
   return (
     <div className="cards">
-      {rows && (
+      {rows.getInscrit === 'pending' && rows.inscrit.length < 1 ? (
+        <CircularProgress size={24} color="info" />
+      ) : (
         <div style={{ width: '100%', height: 450, zIndex: 0 }}>
           <DataGrid
-            rows={filterFn.fn(rows)}
+            rows={filterFn.fn(rows.inscrit)}
             columns={column}
             pageSize={7}
             rowsPerPageOptions={[7]}
